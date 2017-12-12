@@ -112,7 +112,7 @@ class Proxy(object):
 
         # create exchange
         self._exchange = kombu.Exchange(name=self._exchange_name,
-                                        durable=False, auto_delete=True)
+                                        durable=True, auto_delete=False)
 
     @property
     def dispatcher(self):
@@ -148,8 +148,8 @@ class Proxy(object):
         """Make a named queue for the given exchange."""
         queue_name = "%s_%s" % (self._exchange_name, routing_key)
         return kombu.Queue(name=queue_name,
-                           routing_key=routing_key, durable=False,
-                           exchange=exchange, auto_delete=True,
+                           routing_key=routing_key, durable=True,
+                           exchange=exchange, auto_delete=False,
                            channel=channel)
 
     def publish(self, msg, routing_key, reply_to=None, correlation_id=None):
